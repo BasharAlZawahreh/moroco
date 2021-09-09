@@ -18,6 +18,12 @@ const userSchema= mongoose.Schema({
     folowees: [{type:mongoose.Schema.Types.ObjectId,ref:"User"}],
     foloweesCount: {type:Number}
 });
+
+userSchema.pre("save", async function () {
+    this.email = this.email.toLowerCase();
+    this.password = await bcrypt.hash(this.password, 10);
+  });
+
 module.exports=mongoose.model("User",userSchema);
 
 
