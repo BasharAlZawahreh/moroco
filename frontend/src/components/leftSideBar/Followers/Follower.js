@@ -36,7 +36,7 @@ function Follower({f}) {
       </div>
         </div>
   <div  style={{display:"flex",justifyContent:"flex-end",width:"55%"}}>
-      <button onClick={()=> {addFollower(f._id)}} className="btnF" >{isFollower?"Unfollow":"Follow"}</button>
+      <button onClick={()=> {addFollower(f._id)}} className="btnF" >{!isFollower?"Unfollow":"Follow"}</button>
   </div> 
   </div>      
     )

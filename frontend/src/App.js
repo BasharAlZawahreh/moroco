@@ -23,6 +23,7 @@ export const postContext = createContext({ value: [], setValue: () => {} });
 export const searchContext = createContext({});
 export const profimgContext = createContext({});   // main image
 export const commentContext = createContext({});
+export const isNewLiked = createContext({});
 
 const App = () => {
   let { setIsLoggedIn, isLoggedIn, saveToken ,token,userId} = useContext(AuthContext);
@@ -32,7 +33,8 @@ const App = () => {
   const [sValue, setsValue] = useState([]);
   const [profimg, setProfimg] = useState(""); //main image
   const [comment, setComment] = useState([]);
-  const [nameUser1,setNameuser1] = useState('')
+  const [isNewLiked1,setIsNewLiked] = useState(false)
+  const [nameUser1,setNameuser1] = useState("")
   // const {token ,userId} =  useContext(AuthContext);
 
   
@@ -71,6 +73,7 @@ const App = () => {
             <searchContext.Provider value={{ sValue, setsValue }}>
               <commentContext.Provider value={{ comment, setComment }}>
                 <profimgContext.Provider value={{ profimg, setProfimg }}>      {/*  main image  */}
+                <isNewLiked.Provider value={{ isNewLiked1, setIsNewLiked }}>      {/*  main image  */}
                   <Header />
                   <div className="App">
                   <div class="container">
@@ -106,6 +109,7 @@ const App = () => {
                     
                   </div>
                   </div>
+                </isNewLiked.Provider>
                 </profimgContext.Provider>
               </commentContext.Provider>
             </searchContext.Provider>

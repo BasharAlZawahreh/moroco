@@ -16,7 +16,7 @@ function Trending({ t }) {
   const [nameUser, setNameUser] = useState("");      
   const { token, userId } = useContext(AuthContext);   
   const { profimg } = useContext(profimgContext);
-
+console.log("123 123 userId",userId)
   const getNameUser = async () => {
     try {
       const res = await axios.get(`http://localhost:5000/users/${userId}`, {
@@ -63,8 +63,8 @@ function Trending({ t }) {
         </div>
     </div>
             <p class="text" >
-            {/* {choose(t.post.body)} */}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt nemo et sequi placeat cum accusantium dolor natus molestiae officiis sint ducimus expedita quaerat corrupti aspernatur repudiandae harum totam, deserunt ea.               
+            {choose(t.post.body)}
+               
             </p>
             <div style={{textAlign:"right"}}> <ThumbUpAltIcon  className="iconLikeTrind"/> {t.post.likesCounter}</div>
 </div>

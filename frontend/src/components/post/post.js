@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import "./post.css";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import axios from "axios";
-import { postContext } from "../../App";
+import { postContext,isNewLiked } from "../../App";
 import { AuthContext } from "../../contexts/context";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -23,6 +23,7 @@ const Post = () => {
   const formatter = buildFormatter(frenchStrings);
   const [posts, setPosts] = useState([]);
   const { value, setValue } = useContext(postContext);
+  const { isNewLiked1, setIsNewLiked } = useContext(isNewLiked);
   const { token, userId } = useContext(AuthContext);
   const [nameUser, setNameUser] = useState("");
   const [imgUser, setImgUser] = useState("");
@@ -35,7 +36,11 @@ const Post = () => {
       <span>
         {arraybody.map((x) => {
           if (x.startsWith("http")) {
-            return <img classNameName="postImg" src={x} />;
+            return(
+              <div className="photo">
+              <img src={x} alt="" width="100%" />
+            </div>
+            ) 
           }
           return x + " ";
         })}
@@ -95,6 +100,7 @@ const Post = () => {
             return post._id === id ? newpost : post;
           });
           setPosts(afterLiking);
+          setIsNewLiked(prev=>!prev)
         });
 
       //  getAllPosts();
@@ -144,8 +150,13 @@ const Post = () => {
             </span>
           </div>
 
+      <div className="caption" style={{padding:"20px"}}>
+            <p>
+            {choose(p.body)}
+            </p>
+          </div>
           <div className="photo">
-            <img src="assets/b-2.jpg" alt="" width="100%" />
+            {/* <img src="assets/b-2.jpg" alt="" width="100%" /> */}
           </div>
 
           <div className="action">
@@ -172,11 +183,7 @@ const Post = () => {
               </span>
             </div>
           </div>
-          <div className="caption">
-            <p>
-            {choose(p.body)}
-            </p>
-          </div>
+          
         </div>
     ))}
       </div>

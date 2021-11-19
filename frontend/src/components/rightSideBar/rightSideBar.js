@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import "./rightSideBar.css";
 import axios from "axios";
 import Trending from "./trending";
-
+import { profimgContext, isNewLiked } from "../../App";
 const RightSideBar = () => {
   const [trends, setTrends] = useState([])
-
+  const { isNewLiked1 } = useContext(isNewLiked);
     useEffect(() => {
       axios.get("http://localhost:5000/trends").then((res) => {
         // console.log("res mraish", res)
@@ -14,7 +14,7 @@ const RightSideBar = () => {
       }).catch((err)=>{
         console.log(err);
       });
-    },[]);
+    },[isNewLiked1]);
     
   return (
     <div class="right">
