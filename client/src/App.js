@@ -63,7 +63,7 @@ const App = () => {
       <div>
         {!isLoggedIn ? (
           <Switch>
-            <Route exact path="/" component={Main} />
+            <Route exact path="/" component={Login} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={SignUp} />
             {/* <Route path="*" component={() => "404 Page Not Found"} /> */}
