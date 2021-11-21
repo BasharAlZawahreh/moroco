@@ -1,3 +1,5 @@
+var nodemailer = require("nodemailer");
+const app = require('../../main')
 const User = require("../../db/models/user");
 
 const register = (req, res) => {
@@ -20,7 +22,6 @@ const register = (req, res) => {
     })
     .catch((err) => {
       if (err.keyPattern) {
-        // <---- what is this ?
         return res.status(409).json({
           success: false,
           message: `The email already exists`,
@@ -36,7 +37,6 @@ const register = (req, res) => {
 
 const getUserById = (req, res) => {
   const id = req.params.id;
-  // console.log("mai id",id)
   User.findById({ _id: id })
     .populate("followers")
     .then((result) => {
@@ -56,7 +56,6 @@ const getUserById = (req, res) => {
 };
 
 const follwoUnfollwo = (req, res) => {
-  // console.log("request",req,"request")
   const _id = req.params.id;
 
   const curruntuser = req.token.userId;
@@ -102,7 +101,6 @@ const checkIsFollower = (req, res) => {
       });
     });
 };
-//// .findByIdAndUpdate(_id, req.body, { new: true }) .exec()
 const updateUserById = (req, res) => {
   const { lastName, age, email, gender, avatar } = req.body;
   console.log("reqbody",req.body)
