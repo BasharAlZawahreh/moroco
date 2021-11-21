@@ -24,6 +24,6 @@ app.use("/trends", trendsRouter);
 // app.use(authRouter);
 
 // //Page not found 404 handler
- app.use("*", (req, res) => res.status(404).json("NO content at this path"));
+ //app.use("*", (req, res) => res.status(404).json("NO content at this path"));
 
  module.exports = app;
