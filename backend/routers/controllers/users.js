@@ -1,5 +1,5 @@
 var nodemailer = require("nodemailer");
-const app = require('../../main')
+const app = require("../../main");
 const User = require("../../db/models/user");
 
 const register = (req, res) => {
@@ -14,6 +14,44 @@ const register = (req, res) => {
   user
     .save()
     .then((result) => {
+      var transporter = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+          user: process.env.SENDGRID_USERNAME,
+          pass: process.env.SENDGRID_PASSWORD,
+        },
+      });
+      var mailOptions = {
+        from: "moroco.social.apps@gmail.com ",
+        to: email,
+        subject: "Account Verification Link",
+        text:
+          "Hello " +
+          firstName+
+          ",\n\n" +
+          "Please verify your account by clicking the link: \n"+
+          "http://" + req.headers.host + "/confirmation/" +
+          email +
+          "\n\nThank You!\n",
+      };
+
+      transporter.sendMail(mailOptions, function (err) {
+        if (err) {
+          return res
+            .status(500)
+            .send({
+              msg: "Technical Issue!, Please click on resend for verify your Email.",
+            });
+        }
+        return res
+          .status(200)
+          .send(
+            "A verification email has been sent to " +
+              email +
+              ". It will be expire after one day. If you not get verification Email click on resend token."
+          );
+      });
+      
       res.status(201).json({
         success: true,
         message: `User Created Successfully`,
@@ -103,7 +141,7 @@ const checkIsFollower = (req, res) => {
 };
 const updateUserById = (req, res) => {
   const { lastName, age, email, gender, avatar } = req.body;
-  console.log("reqbody",req.body)
+  console.log("reqbody", req.body);
   const _id = req.params.id;
   User.findByIdAndUpdate(
     { _id: _id },
@@ -124,7 +162,7 @@ const updateUserById = (req, res) => {
           message: `The User => ${_id} not found`,
         });
       }
-      console.log("mrs mai",result)
+      console.log("mrs mai", result);
       res.status(200).json({
         success: true,
         message: `The post with ${_id}`,
