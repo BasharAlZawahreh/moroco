@@ -1,6 +1,7 @@
 var nodemailer = require("nodemailer");
 const app = require("../../main");
 const User = require("../../db/models/user");
+require("dotenv").config();
 
 const register = (req, res) => {
   const { firstName, gender, email, password } = req.body;
