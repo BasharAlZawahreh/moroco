@@ -11,7 +11,7 @@ const Album = () => {
     const {profimg, setProfimg} = useContext(profimgContext);
 
 useEffect(()=>{
-    axios.get(`http://localhost:5000/users/${userId}`, {
+    axios.get(`/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         }})
@@ -26,7 +26,7 @@ useEffect(()=>{
 const ChangeProfPhoto = async ()=>{
   console.log("ff",selectedImg)
     try {
-      await axios.put(`http://localhost:5000/users/${userId}`,{
+      await axios.put(`/users/${userId}`,{
         avatar:selectedImg
        
       }, {

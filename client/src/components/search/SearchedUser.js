@@ -10,7 +10,7 @@ const SearchedUser = ({ e }) => {
   const addFollower = async (id) => {
     try {
       await axios.put(
-        `http://localhost:5000/users/test/${id}/follow `,
+        `/users/test/${id}/follow `,
         {},
         {
           headers: {
@@ -29,7 +29,7 @@ const SearchedUser = ({ e }) => {
     // /
     try {
       const result = await axios.get(
-        `http://localhost:5000/users/${userId}/${e._id} `,
+        `/users/${userId}/${e._id} `,
         {
           headers: {
             Authorization: `Bearer ${token}`,

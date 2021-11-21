@@ -25,7 +25,7 @@ const EditProfile=()=>{
     const [url, setUrl] = useState(profimg); // url that we get from firebase to send to the db
     const [backupImage, setbackupImage] = useState("")
     useEffect(()=>{
-        axios.get(`http://localhost:5000/users/${userId}`, {
+        axios.get(`/users/${userId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             }})
@@ -50,7 +50,7 @@ const EditProfile=()=>{
         console.log("here");
        
         try {
-          await axios.put(`http://localhost:5000/users/${userId}`,{
+          await axios.put(`/users/${userId}`,{
             lastName:lastName,
             age:age,
             email: email,

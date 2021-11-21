@@ -13,7 +13,7 @@ function Follower({f}) {
    
     try {
       
-     await axios.put(`http://localhost:5000/users/test/${id}/follow `, {}, {
+     await axios.put(`/users/test/${id}/follow `, {}, {
       headers: {
         Authorization: `Bearer ${token}`,
       }})

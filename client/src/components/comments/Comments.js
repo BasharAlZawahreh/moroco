@@ -26,7 +26,7 @@ const Comments = () => {
   useEffect(() => {
     // console.log(comment,"comment")
     axios
-    .get(`http://localhost:5000/posts/getpostbyid/${postId}`, {
+    .get(`/posts/getpostbyid/${postId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -46,7 +46,7 @@ const Comments = () => {
     e.preventDefault()
     try {
       const res = await axios.post(
-        `http://localhost:5000/posts/${postId}/comment`,
+        `/posts/${postId}/comment`,
         { comment: newComment },
         {
           headers: {

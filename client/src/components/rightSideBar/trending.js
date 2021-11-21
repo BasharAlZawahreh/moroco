@@ -19,7 +19,7 @@ function Trending({ t }) {
 console.log("123 123 userId",userId)
   const getNameUser = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/users/${userId}`, {
+      const res = await axios.get(`/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -19,7 +19,7 @@ const Comment = ({ c, postId, setComments, comments }) => {
   const updateComment = async (id) => {
     try {
       const res = await axios.put(
-        `http://localhost:5000/posts/${id}/comment/`,
+        `/posts/${id}/comment/`,
         { body: NewBody },
         {
           headers: {
@@ -41,7 +41,7 @@ const Comment = ({ c, postId, setComments, comments }) => {
     console.log("post",postId)
     try {
       const res = await axios.delete(
-        `http://localhost:5000/posts/${postId}/comment/${id}`,
+        `/posts/${postId}/comment/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
