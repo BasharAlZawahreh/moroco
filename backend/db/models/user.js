@@ -13,6 +13,7 @@ const userSchema= mongoose.Schema({
     cover:  {type:String},
     gender: {type:String},
     album: [{type:String}],
+    isActive:{type:Boolean, default:false},
     followers: [{type:mongoose.Schema.Types.ObjectId,ref:"User"}],
     followersCount:{type:Number},
     folowees: [{type:mongoose.Schema.Types.ObjectId,ref:"User"}],

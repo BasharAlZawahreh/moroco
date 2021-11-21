@@ -1,3 +1,5 @@
+var nodemailer = require("nodemailer");
+const app = require("../../main");
 const User = require("../../db/models/user");
 
 const register = (req, res) => {
@@ -12,6 +14,44 @@ const register = (req, res) => {
   user
     .save()
     .then((result) => {
+      var transporter = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+          user: process.env.SENDGRID_USERNAME,
+          pass: process.env.SENDGRID_PASSWORD,
+        },
+      });
+      var mailOptions = {
+        from: "moroco.social.apps@gmail.com ",
+        to: email,
+        subject: "Account Verification Link",
+        text:
+          "Hello " +
+          firstName +
+          ",\n\n" +
+          "Please verify your account by clicking the link: \n" +
+          "http://" +
+          req.headers.host +
+          "/users/confirmation/" +
+          email +
+          "\n\nThank You!\n",
+      };
+
+      transporter.sendMail(mailOptions, function (err) {
+        if (err) {
+          return res.status(500).send({
+            msg: "Technical Issue!, Please click on resend for verify your Email.",
+          });
+        }
+        return res
+          .status(200)
+          .send(
+            "A verification email has been sent to " +
+              email +
+              ". It will be expire after one day. If you not get verification Email click on resend token."
+          );
+      });
+
       res.status(201).json({
         success: true,
         message: `User Created Successfully`,
@@ -20,7 +60,6 @@ const register = (req, res) => {
     })
     .catch((err) => {
       if (err.keyPattern) {
-        // <---- what is this ?
         return res.status(409).json({
           success: false,
           message: `The email already exists`,
@@ -36,7 +75,6 @@ const register = (req, res) => {
 
 const getUserById = (req, res) => {
   const id = req.params.id;
-  // console.log("mai id",id)
   User.findById({ _id: id })
     .populate("followers")
     .then((result) => {
@@ -56,7 +94,6 @@ const getUserById = (req, res) => {
 };
 
 const follwoUnfollwo = (req, res) => {
-  // console.log("request",req,"request")
   const _id = req.params.id;
 
   const curruntuser = req.token.userId;
@@ -102,10 +139,9 @@ const checkIsFollower = (req, res) => {
       });
     });
 };
-//// .findByIdAndUpdate(_id, req.body, { new: true }) .exec()
 const updateUserById = (req, res) => {
   const { lastName, age, email, gender, avatar } = req.body;
-  console.log("reqbody",req.body)
+  console.log("reqbody", req.body);
   const _id = req.params.id;
   User.findByIdAndUpdate(
     { _id: _id },
@@ -126,7 +162,7 @@ const updateUserById = (req, res) => {
           message: `The User => ${_id} not found`,
         });
       }
-      console.log("mrs mai",result)
+      console.log("mrs mai", result);
       res.status(200).json({
         success: true,
         message: `The post with ${_id}`,
@@ -180,6 +216,37 @@ const searchUsersByName = (req, res) => {
     });
 };
 
+const verification = (req, res) => {
+  User.findOne({ email: req.params.email }).then((result) => {
+    // not valid user
+    if (!result) {
+      return res.status(401).send({
+        msg: "We were unable to find a user for this verification. Please SignUp!",
+      });
+    }
+    // user is already verified
+    else if (result.isVerified) {
+      return res
+        .status(200)
+        .send("User has been already verified. Please Login");
+    }
+    // verify user
+    else {
+      // change isVerified to true
+      User.findByIdAndUpdate(result._id, { isActive: true }, { new: true })
+        .then((result) => {
+          return res
+            .status(200)
+            .json("Your account has been successfully verified");
+        })
+        .catch((error) => {
+          console.log(error)
+          return res.status(500).json({ msg: error });
+        });
+    }
+  });
+};
+
 module.exports = {
   getUserById,
   register,
@@ -187,4 +254,5 @@ module.exports = {
   searchUsersByName,
   updateUserById,
   checkIsFollower,
+  verification,
 };
