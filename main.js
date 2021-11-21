@@ -10,6 +10,8 @@ const trendsRouter = require("./routers/routes/trending");
 
 
 const app = express();
+const path = require('path');
+app.use(express.static(path.resolve(__dirname, './client/build')));
 
 //built-in middleware
 app.use(express.json());
