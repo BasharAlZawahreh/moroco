@@ -27,21 +27,21 @@ const register = (req, res) => {
         subject: "Account Verification Link",
         text:
           "Hello " +
-          firstName+
+          firstName +
           ",\n\n" +
-          "Please verify your account by clicking the link: \n"+
-          "http://" + req.headers.host + "/confirmation/" +
+          "Please verify your account by clicking the link: \n" +
+          "http://" +
+          req.headers.host +
+          "/users/confirmation/" +
           email +
           "\n\nThank You!\n",
       };
 
       transporter.sendMail(mailOptions, function (err) {
         if (err) {
-          return res
-            .status(500)
-            .send({
-              msg: "Technical Issue!, Please click on resend for verify your Email.",
-            });
+          return res.status(500).send({
+            msg: "Technical Issue!, Please click on resend for verify your Email.",
+          });
         }
         return res
           .status(200)
@@ -51,7 +51,7 @@ const register = (req, res) => {
               ". It will be expire after one day. If you not get verification Email click on resend token."
           );
       });
-      
+
       res.status(201).json({
         success: true,
         message: `User Created Successfully`,
@@ -216,6 +216,37 @@ const searchUsersByName = (req, res) => {
     });
 };
 
+const verification = (req, res) => {
+  User.findOne({ email: req.params.email }).then((result) => {
+    // not valid user
+    if (!result) {
+      return res.status(401).send({
+        msg: "We were unable to find a user for this verification. Please SignUp!",
+      });
+    }
+    // user is already verified
+    else if (result.isVerified) {
+      return res
+        .status(200)
+        .send("User has been already verified. Please Login");
+    }
+    // verify user
+    else {
+      // change isVerified to true
+      User.findByIdAndUpdate(result._id, { isActive: true }, { new: true })
+        .then((result) => {
+          return res
+            .status(200)
+            .json("Your account has been successfully verified");
+        })
+        .catch((error) => {
+          console.log(error)
+          return res.status(500).json({ msg: error });
+        });
+    }
+  });
+};
+
 module.exports = {
   getUserById,
   register,
@@ -223,4 +254,5 @@ module.exports = {
   searchUsersByName,
   updateUserById,
   checkIsFollower,
+  verification,
 };

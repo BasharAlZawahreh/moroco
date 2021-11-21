@@ -19,12 +19,12 @@ const login = (req, res) => {
           success: false,
           message: `The email doesn't exist`,
         });
-      } else if (!user.isActive) {
-        return res
-          .status(401)
-          .json({
-            messag: "Your Email has not been verified yet.",
-          });
+      }
+       console.log(result)
+      if (!result.isActive) {
+        return res.status(401).json({
+          messag: "Your Email has not been verified yet.",
+        });
       }
       try {
         const valid = await bcrypt.compare(password, result.password);
