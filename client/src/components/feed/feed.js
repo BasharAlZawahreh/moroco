@@ -21,7 +21,7 @@ const Feed = () => {
         const Addpost=(e)=>{
           e.preventDefault()
             console.log(date1,"date1")
-            axios.post("http://localhost:5000/posts",{body:postBody,date:date1},{
+            axios.post("/posts",{body:postBody,date:date1},{
             headers: {
               Authorization: `Bearer ${token}`,
             }}).then(result=>setValue([...value,result]))
@@ -30,7 +30,7 @@ const Feed = () => {
 
   const nameUsersFeed = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/users/${userId}`, {
+      const res = await axios.get(`/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

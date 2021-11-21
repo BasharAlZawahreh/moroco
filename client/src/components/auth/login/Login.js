@@ -130,7 +130,7 @@ const Login = () => {
   const login = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/users/login", {
+      const res = await axios.post("/users/login", {
         email,
         password,
       });
@@ -149,7 +149,7 @@ const Login = () => {
   };
   const  responsesuccessGoogle=(response)=>{
     // console.log(response.profileObj);
-    axios.post("http://localhost:5000/users/googleLogin",{tokenId: response.tokenId})
+    axios.post("/users/googleLogin",{tokenId: response.tokenId})
     .then((res) => {
       console.log(res);
       if (res.data) {

@@ -18,7 +18,7 @@ const Modal = props => {
         e.preventDefault()
       axios
         .post(
-          "http://localhost:5000/posts",
+          "/posts",
           { body: postBody },
           {
             headers: {
@@ -31,7 +31,7 @@ const Modal = props => {
     };
     const nameUsersFeed = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/users/${userId}`, {
+        const res = await axios.get(`/users/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

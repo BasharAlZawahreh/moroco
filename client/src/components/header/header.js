@@ -29,7 +29,7 @@ const Header = () => {
      e.preventDefault();
     axios
       .post(
-        `http://localhost:5000/users/search?name=${data}`,
+        `/users/search?name=${data}`,
         {},
         {
           headers: {

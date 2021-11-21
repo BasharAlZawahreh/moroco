@@ -16,7 +16,7 @@ const Followers = () => {
   useEffect(async () => {
     try {
       // const userid = await token.userId
-      const res = await axios.get(`http://localhost:5000/users/${userId}`, {
+      const res = await axios.get(`/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log("followers", res.data.posts.followers);

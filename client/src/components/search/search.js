@@ -29,7 +29,7 @@ const Search = () => {
  const addFollower = async()=> {  // no es6 @ farhan
   console.log("hi")
   try {
-    const res = await axios.put(`http://localhost:5000/users/${f._id}/follow`, {
+    const res = await axios.put(`/users/${f._id}/follow`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

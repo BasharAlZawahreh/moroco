@@ -47,7 +47,7 @@ const App = () => {
     try {
       console.log("mai hi",userId,"",token)
       // const userid = await token.userId
-      const res = await axios.get(`http://localhost:5000/users/${userId}`, {headers: {Authorization: `Bearer ${token}`,},});
+      const res = await axios.get(`/users/${userId}`, {headers: {Authorization: `Bearer ${token}`,},});
         console.log("mai res",res)
       // setNameUser(res.data.posts.firstName);
       setProfimg(res.data.posts.avatar) //check to know correct . . 

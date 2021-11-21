@@ -11,7 +11,7 @@ const SignUp = () => {
   const signUpSend = (e) => {
     e.preventDefault();
     let savedData = { firstName, password, email };
-    axios.post("http://localhost:5000/users/", savedData).then((res) => {
+    axios.post("/users/", savedData).then((res) => {
         history.push("/Login")
     }).catch((err) =>{
         if(err.message){

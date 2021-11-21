@@ -20,7 +20,7 @@ const LeftSideBar = ({name}) => {
 // console.log(object)
   const getNameUser2 = async () => {
     try {
-      await axios.get(`http://localhost:5000/users/${userId}`, {
+      await axios.get(`/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

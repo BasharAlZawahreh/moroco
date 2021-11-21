@@ -52,7 +52,7 @@ const Post = () => {
   */
   const getAllPosts = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/posts");
+      const res = await axios.get("/posts");
       // console.log("")
       // console.log("naif",res);
       setPosts(res.data.posts);
@@ -67,7 +67,7 @@ const Post = () => {
 
   const deletePost = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/posts/deletepost/${id}`, {
+      await axios.delete(`/posts/deletepost/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -85,7 +85,7 @@ const Post = () => {
     try {
       await axios
         .put(
-          `http://localhost:5000/posts/${id}/like`,
+          `/posts/${id}/like`,
           {},
           {
             headers: {
@@ -111,7 +111,7 @@ const Post = () => {
 
   // const getNameInPost = async () => {
   //   try {
-  //     const res = await axios.get(`http://localhost:5000/users/${userId}`, {
+  //     const res = await axios.get(`/users/${userId}`, {
   //       headers: {
   //         Authorization: `Bearer ${token}`,
   //       },
